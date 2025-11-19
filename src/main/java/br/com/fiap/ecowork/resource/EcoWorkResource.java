@@ -46,13 +46,13 @@ public class EcoWorkResource {
         }
     }
 
-    // Endpoint Especial para o Front mostrar o impacto
+    //endpoint para o frontend.
     @GET
     @Path("/calculo-impacto/{distancia}/{dias}")
     public Response simularImpacto(@PathParam("distancia") Double distancia, @PathParam("dias") int dias) {
         Usuario u = new Usuario();
         u.setDistanciaTrabalhoKm(distancia);
-        double co2Evitado = ecoLogicBO.calcularImpactoAmbiental(u, dias);
+        double co2Evitado = ecoLogicBO.calcularImpactoDiario(u);
 
         return Response.ok("{\"co2EvitadoKg\": " + co2Evitado + "}").build();
     }

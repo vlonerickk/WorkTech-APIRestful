@@ -49,6 +49,27 @@ public class UsuarioDAO {
         }
         return lista;
     }
+    public Usuario buscarPorId(Long id) throws SQLException {
+        String sql = "SELECT * FROM T_EWA_USUARIO WHERE id_usuario = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setLong(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setId(rs.getLong("id_usuario"));
+                    u.setNome(rs.getString("nm_usuario"));
+                    u.setEmail(rs.getString("email"));
+                    u.setDistanciaTrabalhoKm(rs.getDouble("dist_km"));
+                    return u;
+                }
+            }
+        }
+        return null;
+    }
 
     // Implementar métodos atualizar e deletar conforme necessidade do CRUD completo
 }
